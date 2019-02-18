@@ -8,3 +8,5 @@ url : localhost:3000/api/v1/assignButler
 
 For backend 2 test
 url : localhost:3000/api/v1/import
+
+For Test : npm test
