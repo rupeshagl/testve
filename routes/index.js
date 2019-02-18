@@ -61,7 +61,7 @@ router.get('/api/v1/import', (req, res, next) => {
 
 
 // For assign butlers
-router.get('/api/v1/assignButler', (req, res, next) => {
+router.get('/api/v1/assignRequest', (req, res, next) => {
 	var eRequests = [
 	    {
 	        clientId: 1,
@@ -84,21 +84,7 @@ router.get('/api/v1/assignButler', (req, res, next) => {
 	        hours: 2
 	    }
 	]
-/*
-	var exampleReturnValue = {
-	    butlers: [
-	        {
-	            requests: ['abc', 'zzz']
-	        },
-	        {
-	            requests: ['def','ghi']
-	        }, 
-	        {
-	            etc: 'etc...'
-	        }
-	    ],
-	    spreadClientIds: [1,2]
-	}*/
+/
 
 	function allocateAndReport(requests) {
 
