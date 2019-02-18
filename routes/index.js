@@ -112,14 +112,13 @@ router.get('/api/v1/assignButler', (req, res, next) => {
 		    		if((requests[i].hours+requests[j].hours) < 9) {
 
 		    			//assign request if less than 8 hours
-		    			console.log(requests[i].requestId);
 		    			reqObj = {requests :[requests[i].requestId, requests[j].requestId]};
 		    			output.butlers.push(reqObj);		    			
 		    		}
 		    	}
 
 		    	spreadClientIds.push(requests[i].clientId);
-		    	console.log(i, reqLen)
+		    	
 		    	if(i == reqLen-2) {
 		    		output.spreadClientIds = _.uniq(spreadClientIds);
 		    		res.status(200).json({success: true, result: output});
