@@ -3,7 +3,6 @@ var request = require('request');
 
 it('Import CSV', function(done) {
     request('http://localhost:3000/api/v1/import' , function(error, response, body) {
-    	console.log(body);
         expect(response.statusCode).to.equal(200);
         done();
     });
