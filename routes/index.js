@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var pg = require('pg');
 var path = require('path');
+var Combinatorics = require('js-combinatorics');
 var request = require('request'),
 _ = require("lodash"),
 csv = require("fast-csv"),
@@ -89,31 +90,22 @@ router.get('/api/v1/assignRequest', (req, res, next) => {
 	function allocateAndReport(requests) {
 
 		var output = {butlers : [], spreadClientIds : []}, reqObj = {}, spreadClientIds = [];;
-		var reqLen = requests.length
-	    if(reqLen) {
-		    for(var i = 0; i < reqLen-1; i++ ) {
-
-		    	for( var j = i+1; j < reqLen; j++) {
-
-		    		if((requests[i].hours+requests[j].hours) < 9) {
-
-		    			//assign request if less than 8 hours
-		    			reqObj = {requests :[requests[i].requestId, requests[j].requestId]};
-		    			output.butlers.push(reqObj);		    			
-		    		}
-		    	}
-
-		    	spreadClientIds.push(requests[i].clientId);
-		    	
-		    	if(i == reqLen-2) {
-		    		output.spreadClientIds = _.uniq(spreadClientIds);
-		    		res.status(200).json({success: true, result: output});
-		    	} 
-		    		
-		    }	    
-	    }
-
-	    //_.each(a, console.log)
+		var cmb, a;
+		cmb = Combinatorics.power(requests);
+		cmb.forEach(function(a){ 
+			if(a.length > 1) {
+				var hours = 0;
+				reqObj = {requests:[]}
+			a.forEach(function(b){	
+				hours +=b.hours;
+				output.spreadClientIds.push(b.clientId);
+				reqObj.requests.push(b.requestId)
+			}) 
+			if(hours < 9 ) output.butlers.push(reqObj);
+		}
+		});
+		output.spreadClientIds = _.uniq(output.spreadClientIds);
+	    res.status(200).json({success: true, result: output});
 	    
 	}
 
