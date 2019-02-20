@@ -3,8 +3,8 @@
 
 ```bash
 # clone our repo
-git clone https://github.com/aglgit360/adv8_new.git
-
+git clone 
+https://github.com/rupeshagl/testve.git
 # change directory to our repo
 cd testve
 
